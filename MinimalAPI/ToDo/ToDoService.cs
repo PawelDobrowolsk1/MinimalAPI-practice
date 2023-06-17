@@ -1,6 +1,15 @@
 ﻿namespace MinimalAPI;
 
-public class ToDoService
+public interface IToDoService
+{
+    void Create(ToDo toDo);
+    void Delete(Guid id);
+    List<ToDo> GetAll();
+    ToDo GetById(Guid id);
+    void Update(ToDo toDo);
+}
+
+public class ToDoService : IToDoService
 {
     private readonly Dictionary<Guid, ToDo> _toDos = new();
 
@@ -34,7 +43,7 @@ public class ToDoService
     {
         var exsitingDoTo = GetById(toDo.Id);
 
-        if(exsitingDoTo is null)
+        if (exsitingDoTo is null)
         {
             return;
         }
