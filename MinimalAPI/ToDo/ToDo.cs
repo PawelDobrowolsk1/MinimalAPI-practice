@@ -1,4 +1,4 @@
-﻿namespace MinimalAPI.ToDo;
+﻿namespace MinimalAPI;
 
 public class ToDo
 {
