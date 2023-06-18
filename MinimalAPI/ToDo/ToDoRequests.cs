@@ -16,12 +16,14 @@ public static class ToDoRequests
         app.MapPost("/todos", Create)
             .Produces(statusCode: 201)
             .Accepts<ToDo>("application/json")
+            .WithValidator<ToDo>()
             .WithTags("To Dos");
 
         app.MapPut("/todos/{id}", Update)
             .Produces(statusCode: 204)
             .Produces(statusCode: 404)
             .Accepts<ToDo>("application/json")
+            .WithValidator<ToDo>()
             .WithTags("To Dos");
 
         app.MapDelete("/todos/{id}", Delete)
