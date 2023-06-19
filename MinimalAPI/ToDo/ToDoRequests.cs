@@ -1,4 +1,6 @@
-﻿namespace MinimalAPI;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace MinimalAPI;
 
 public static class ToDoRequests
 {
@@ -6,6 +8,7 @@ public static class ToDoRequests
     {
         app.MapGet("/todos", GetAll)
             .Produces<List<ToDo>>()
+            .RequireAuthorization()
             .WithTags("To Dos");
         
         app.MapGet("/todos/{id}", GetById)
@@ -17,6 +20,7 @@ public static class ToDoRequests
             .Produces(statusCode: 201)
             .Accepts<ToDo>("application/json")
             .WithValidator<ToDo>()
+            .RequireAuthorization("admin")
             .WithTags("To Dos");
 
         app.MapPut("/todos/{id}", Update)
@@ -41,6 +45,7 @@ public static class ToDoRequests
         return Results.Ok(toDos);
     }
 
+    [Authorize(Roles = "User")]
     public static IResult GetById(IToDoService service, Guid id)
     {
         var todo = service.GetById(id);

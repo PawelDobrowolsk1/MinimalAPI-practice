@@ -55,7 +55,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("user", policy => policy.RequireRole("User"));
+    options.AddPolicy("admin", policy => policy.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 
